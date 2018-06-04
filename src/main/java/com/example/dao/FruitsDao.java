@@ -2,6 +2,7 @@ package com.example.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,7 +18,7 @@ public class FruitsDao {
 	private static final String DB_PASSWORD = "admin";
 
 	public List<FruitsDto> findAll() {
-		try(
+		try (
 			Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 			Statement st = con.createStatement()
 		) {
@@ -31,6 +32,27 @@ public class FruitsDao {
 				fruitsList.add(fruitsDto);
 			}
 			return fruitsList;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public FruitsDto selectById (int id) {
+		String sql = "select * from fruits where id = ?";
+		try (
+			Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+			PreparedStatement ps = con.prepareStatement(sql)
+		) {
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			FruitsDto fruitsDto = null;
+			while (rs.next()) {
+				fruitsDto = new FruitsDto();
+				fruitsDto.setId(rs.getInt("id"));
+				fruitsDto.setName(rs.getString("name"));
+				fruitsDto.setPrice(rs.getInt("price"));
+			}
+			return fruitsDto;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

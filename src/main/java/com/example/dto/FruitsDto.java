@@ -6,6 +6,16 @@ public class FruitsDto {
 	private String name;
 	private int price;
 
+	public FruitsDto() {
+
+	}
+
+	public FruitsDto (int id, String name, int price) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
+
 	public int getId() {
 		return id;
 	}
