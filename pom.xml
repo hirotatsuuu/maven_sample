@@ -50,5 +50,10 @@
       <artifactId>servlet</artifactId>
       <version>4.1.36</version>
     </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>selenide</artifactId>
+      <version>4.12.1</version>
+    </dependency>
   </dependencies>
 </project>
